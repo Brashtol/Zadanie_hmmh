@@ -2,7 +2,8 @@
 
 include("inc/enqueue_scripts.php");
 include("inc/register_types.php");
-include("inc/acf.php");
+include("inc/acf_backend_task.php");
+include("inc/acf_frontend_task.php");
 
 //usuwanie śmieci
 remove_action('wp_head', 'rsd_link');
