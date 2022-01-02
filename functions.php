@@ -47,6 +47,5 @@ function custom_gutenberg_register_files() {
     register_block_type('custom/ma-block-files', array(
         'editor_script' => 'custom-block-script'
     ));
-
 }
 add_action('init', 'custom_gutenberg_register_files');
