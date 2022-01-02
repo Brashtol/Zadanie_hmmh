@@ -1,5 +1,9 @@
 <?php
 
+include("inc/enqueue_scripts.php");
+include("inc/register_types.php");
+include("inc/acf.php");
+
 //usuwanie śmieci
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
@@ -31,3 +35,18 @@ if(function_exists('register_nav_menus')){
 		)
 	);
 }
+
+function custom_gutenberg_register_files() {
+    // script file
+    wp_register_script(
+        'custom-block-script',
+        get_stylesheet_directory_uri().'/js/dist/hide_block.min.js',
+        array('wp-blocks', 'wp-edit-post')
+    );
+    // register block editor script
+    register_block_type('custom/ma-block-files', array(
+        'editor_script' => 'custom-block-script'
+    ));
+
+}
+add_action('init', 'custom_gutenberg_register_files');
