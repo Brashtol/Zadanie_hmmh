@@ -1,5 +1,53 @@
 <?php
 
+function registerTypes(){
+	$labels = array(
+		'name' => 'Samochód',
+		'all_items' => 'Samochody',
+		'singular_name' => 'Samochód',
+		'add_new' => 'Dodaj nowy samochód',
+		'add_new_item' => 'Dodaj nowy samochód',
+		'edit_item' => 'Edytuj samochód',
+		'new_item' => 'Nowy samochód',
+		'view_item' => 'Zobacz samochód',
+		'search_items' => 'szukaj w samochodach',
+		'not_found' => 'nie znaleziono',
+		'not_found_in_trash' => 'kosz jest pusty'
+	);
+
+	$args = array(
+		'labels' => $labels,
+		'singular_label' => 'Samochody',
+		'public' => true,
+		'show_ui' => true,
+		'show_in_nav_menus' => false,
+		'capability_type' => 'post',
+		'hierarchical' => false,
+		'supports' => array('title', 'editor'),
+    'map_meta_cap' => true,
+    // 'show_in_rest' => true,
+		'menu_icon' => 'dashicons-welcome-write-blog'
+	);
+
+	register_post_type('car', $args);
+}
+add_action('init', 'registerTypes');
+
+add_role('mechanic', 'Mechanik', array(
+  'read_car',
+  'edit_car',
+  'edit_cars',
+  'edit_others_cars',
+  'edit_private_cars',
+  'edit_published_cars',
+  'publish__cars',
+  'delete_car',
+  'delete_cars',
+  'delete_private_cars',
+  'delete_published_cars',
+  'delete_others_cars',
+));
+
 if(function_exists('acf_add_local_field_group')):
 
   acf_add_local_field_group(array(

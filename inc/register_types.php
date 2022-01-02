@@ -1,38 +1,5 @@
 <?php
 
-function registerTypes(){
-	$labels = array(
-		'name' => 'Samochód',
-		'all_items' => 'Samochody',
-		'singular_name' => 'Samochód',
-		'add_new' => 'Dodaj nowy samochód',
-		'add_new_item' => 'Dodaj nowy samochód',
-		'edit_item' => 'Edytuj samochód',
-		'new_item' => 'Nowy samochód',
-		'view_item' => 'Zobacz samochód',
-		'search_items' => 'szukaj w samochodach',
-		'not_found' => 'nie znaleziono',
-		'not_found_in_trash' => 'kosz jest pusty'
-	);
-
-	$args = array(
-		'labels' => $labels,
-		'singular_label' => 'Samochody',
-		'public' => true,
-		'show_ui' => true,
-		'show_in_nav_menus' => false,
-		'capability_type' => 'post',
-		'hierarchical' => false,
-		'supports' => array('title', 'editor'),
-    'map_meta_cap' => true,
-    // 'show_in_rest' => true,
-		'menu_icon' => 'dashicons-welcome-write-blog'
-	);
-
-	register_post_type('car', $args);
-}
-add_action('init', 'registerTypes');
-
 function custom_unregister_tags() {
   // unregister_taxonomy_for_object_type('category', 'post');
   unregister_taxonomy_for_object_type('post_tag', 'post');
