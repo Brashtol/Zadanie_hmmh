@@ -11,22 +11,23 @@ var gulp = require('gulp'),
   watch = require('gulp-watch'),
   browserSync = require('browser-sync').create();
 
+var postcss_plugins = [
+    autoprefixer(),
+    cssnano(),
+    pxToREM({
+      rootValue: 16,
+      unitPrecision: 5,
+      propList: ['*', '!border', '!border-left', '!border-right', '!border-top', '!border-bottom'],
+      selectorBlackList: [],
+      replace: true,
+      mediaQuery: false,
+      minPixelValue: 0,
+    })
+];
+
 gulp.task('postcss', function () {
-  var plugins = [
-      autoprefixer(),
-      cssnano(),
-      pxToREM({
-        rootValue: 16,
-        unitPrecision: 5,
-        propList: ['*', '!border', '!border-left', '!border-right', '!border-top', '!border-bottom'],
-        selectorBlackList: [],
-        replace: true,
-        mediaQuery: false,
-        minPixelValue: 0,
-      })
-  ];
   return gulp.src('./*.css')
-      .pipe(postcss(plugins))
+      .pipe(postcss(postcss_plugins))
       .pipe(gulp.dest('./'));
 });
 
@@ -36,6 +37,15 @@ gulp.task('scss', function() {
 		.pipe(combineMedia())
     .pipe(rename({ basename: "style", extname: ".css" }))
 		.pipe(gulp.dest('./'));
+});
+
+gulp.task('bootstrap', function() {
+	return gulp.src("css/scss/bootstrap/bootstrap-grid.scss")
+		.pipe(sass().on('error', sass.logError))
+    .pipe(postcss(postcss_plugins))
+		.pipe(combineMedia())
+    .pipe(rename({ basename: "bootstrap-5-grid-custom", suffix: '.min', extname: ".css" }))
+		.pipe(gulp.dest('./css'));
 });
 
 gulp.task('compress_js', function () {
@@ -58,4 +68,5 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', gulp.series('scss', 'postcss', 'compress_js', 'watch'));
-gulp.task('postcss', gulp.series('postcss'));
+gulp.task('build', gulp.series('scss', 'postcss', 'bootstrap', 'compress_js'));
+gulp.task('bootstrap', gulp.series('bootstrap'));

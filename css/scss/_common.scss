@@ -11,10 +11,23 @@ html {
 
 body {
   position: relative;
+  font-family: Quicksand;
 }
 
 main {
   background: $white;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
