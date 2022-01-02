@@ -1,0 +1,25 @@
+/*!
+Theme Name: Zadanie hmmh
+Author: Konrad Traczyk
+Version: 0.1
+*/
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+}
+
+main {
+  background: $white;
+}
+
+.container {
+  position: relative;
+}
+
+.hamburger {
+  display: none;
+}
