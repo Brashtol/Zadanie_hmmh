@@ -6,17 +6,18 @@ function custom_unregister_tags() {
 }
 add_action('init', 'custom_unregister_tags');
 
-function custom_post_menu_label() {
-  global $menu;
-  global $submenu;
-  $menu[5][0] = 'Case Study';
-  $submenu['edit.php'][5][0] = 'Case Study';
-  $submenu['edit.php'][10][0] = 'Dodaj Case Study';
-}
-add_action('init', 'custom_post_menu_label');
 
 $user = wp_get_current_user();
 if(!in_array('mechanic', $user->roles)) {
+  function custom_post_menu_label() {
+    global $menu;
+    global $submenu;
+    $menu[5][0] = 'Case Study';
+    $submenu['edit.php'][5][0] = 'Case Study';
+    $submenu['edit.php'][10][0] = 'Dodaj Case Study';
+  }
+  add_action('init', 'custom_post_menu_label');
+
   function custom_post_object_label() {
     global $wp_post_types;
     $labels = &$wp_post_types['post']->labels;
@@ -34,7 +35,7 @@ if(!in_array('mechanic', $user->roles)) {
     $labels->menu_name = 'Case Study';
     $labels->name_admin_bar = 'Case Study';
   }
-  add_action('admin_menu', 'custom_post_menu_label');
+  add_action('init', 'custom_post_object_label');
 
   function custom_change_cat_object() {
     global $wp_taxonomies;

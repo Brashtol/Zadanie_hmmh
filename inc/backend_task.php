@@ -45,7 +45,7 @@ function register_types(){
   $admins->add_cap('delete_published_cars');
   $admins->add_cap('delete_others_cars');
   $admins->add_cap('edit_private_cars');
-  $admins->add_cap('edit_published_cars'); 
+  $admins->add_cap('edit_published_cars');
 }
 add_action('init', 'register_types');
 
@@ -77,7 +77,7 @@ function set_mechanic_role() {
   ));
 
   $user = wp_get_current_user();
-  if(in_array('mechanic', (array)$user->roles)) {
+  if(in_array('mechanic', $user->roles)) {
     remove_menu_page('index.php');
   }
 }
