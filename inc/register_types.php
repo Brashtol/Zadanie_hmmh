@@ -13,45 +13,48 @@ function custom_post_menu_label() {
   $submenu['edit.php'][5][0] = 'Case Study';
   $submenu['edit.php'][10][0] = 'Dodaj Case Study';
 }
-add_action('init', 'custom_post_object_label');
+add_action('init', 'custom_post_menu_label');
 
-function custom_post_object_label() {
-  global $wp_post_types;
-  $labels = &$wp_post_types['post']->labels;
-  $labels->name = 'Case Study';
-  $labels->singular_name = 'Case Study';
-  $labels->add_new = 'Dodaj Case Study';
-  $labels->add_new_item = 'Dodaj Case Study';
-  $labels->edit_item = 'Edytuj Case Study';
-  $labels->new_item = 'Case Study';
-  $labels->view_item = 'Zobacz Case Study';
-  $labels->search_items = 'Szukaj Case Study';
-  $labels->not_found = 'Nie znaleziono Case Study';
-  $labels->not_found_in_trash = 'Kosz jest pusty';
-  $labels->all_items = 'Wszystkie Case Study';
-  $labels->menu_name = 'Case Study';
-  $labels->name_admin_bar = 'Case Study';
-}
-add_action('admin_menu', 'custom_post_menu_label');
+$user = wp_get_current_user();
+if(!in_array('mechanic', $user->roles)) {
+  function custom_post_object_label() {
+    global $wp_post_types;
+    $labels = &$wp_post_types['post']->labels;
+    $labels->name = 'Case Study';
+    $labels->singular_name = 'Case Study';
+    $labels->add_new = 'Dodaj Case Study';
+    $labels->add_new_item = 'Dodaj Case Study';
+    $labels->edit_item = 'Edytuj Case Study';
+    $labels->new_item = 'Case Study';
+    $labels->view_item = 'Zobacz Case Study';
+    $labels->search_items = 'Szukaj Case Study';
+    $labels->not_found = 'Nie znaleziono Case Study';
+    $labels->not_found_in_trash = 'Kosz jest pusty';
+    $labels->all_items = 'Wszystkie Case Study';
+    $labels->menu_name = 'Case Study';
+    $labels->name_admin_bar = 'Case Study';
+  }
+  add_action('admin_menu', 'custom_post_menu_label');
 
-function custom_change_cat_object() {
-  global $wp_taxonomies;
-  $labels = &$wp_taxonomies['category']->labels;
-  $labels->name = 'Typ';
-  $labels->singular_name = 'Typ';
-  $labels->add_new = 'Dodaj Typ';
-  $labels->add_new_item = 'Dodaj Typ';
-  $labels->edit_item = 'Edytuj Typ';
-  $labels->new_item = 'Typ';
-  $labels->view_item = 'Zobacz Typ';
-  $labels->search_items = 'Szukaj Typu';
-  $labels->not_found = 'Nie znaleziono Typ';
-  $labels->not_found_in_trash = 'Kosz jest pusty';
-  $labels->all_items = 'Wszystkie Typy';
-  $labels->menu_name = 'Typ';
-  $labels->name_admin_bar = 'Typ';
+  function custom_change_cat_object() {
+    global $wp_taxonomies;
+    $labels = &$wp_taxonomies['category']->labels;
+    $labels->name = 'Typ';
+    $labels->singular_name = 'Typ';
+    $labels->add_new = 'Dodaj Typ';
+    $labels->add_new_item = 'Dodaj Typ';
+    $labels->edit_item = 'Edytuj Typ';
+    $labels->new_item = 'Typ';
+    $labels->view_item = 'Zobacz Typ';
+    $labels->search_items = 'Szukaj Typu';
+    $labels->not_found = 'Nie znaleziono Typ';
+    $labels->not_found_in_trash = 'Kosz jest pusty';
+    $labels->all_items = 'Wszystkie Typy';
+    $labels->menu_name = 'Typ';
+    $labels->name_admin_bar = 'Typ';
+  }
+  add_action('init', 'custom_change_cat_object');
 }
-add_action('init', 'custom_change_cat_object');
 
 function custom_term_radio_checklist($args) {
   if(!empty( $args['taxonomy']) && $args['taxonomy'] === 'category') {

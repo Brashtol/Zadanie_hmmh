@@ -31,6 +31,21 @@ function register_types(){
 
 	register_post_type('car', $args);
 
+  $admins = get_role('administrator');
+  $admins->add_cap('read_car');
+  $admins->add_cap('edit_car');
+  $admins->add_cap('delete_car');
+  $admins->add_cap('edit_cars');
+  $admins->add_cap('edit_others_cars');
+  $admins->add_cap('publish_cars');
+  $admins->add_cap('read_private_cars');
+  $admins->add_cap('publish_car');
+  $admins->add_cap('delete_cars');
+  $admins->add_cap('delete_private_cars');
+  $admins->add_cap('delete_published_cars');
+  $admins->add_cap('delete_others_cars');
+  $admins->add_cap('edit_private_cars');
+  $admins->add_cap('edit_published_cars'); 
 }
 add_action('init', 'register_types');
 
@@ -39,6 +54,7 @@ function set_mechanic_role() {
   $result = add_role('mechanic', 'Mechanik', array(
     'view_admin_dashboard' => false,
     'read' => true,
+    'upload_files' => true,
     'read_post' => false,
     'read_posts' => false,
     'edit_post' => false,
@@ -68,7 +84,6 @@ function set_mechanic_role() {
 add_action('admin_init', 'set_mechanic_role');
 
 if(function_exists('acf_add_local_field_group')):
-
   acf_add_local_field_group(array(
   	'key' => 'group_61d1f55640325',
   	'title' => 'Car settings',
@@ -155,6 +170,26 @@ if(function_exists('acf_add_local_field_group')):
   			'min' => '',
   			'max' => '',
   			'step' => '',
+  		),
+      array(
+  			'key' => 'field_61d292abd07e5',
+  			'label' => 'Mechanicy',
+  			'name' => 'car_mechanics',
+  			'type' => 'user',
+  			'instructions' => '',
+  			'required' => 0,
+  			'conditional_logic' => 0,
+  			'wrapper' => array(
+  				'width' => '',
+  				'class' => '',
+  				'id' => '',
+  			),
+  			'role' => array(
+  				0 => 'mechanic',
+  			),
+  			'allow_null' => 0,
+  			'multiple' => 1,
+  			'return_format' => 'array',
   		),
   	),
   	'location' => array(
