@@ -4,6 +4,7 @@ $car_mechanics = get_field('car_mechanics');
 ?>
 <main id="content">
   <article class="single-car container">
+    <?= wp_get_attachment_image(get_field('img'), 'fullsize'); ?>
     <h1><?= get_the_title() ?></h1>
     <h2 style="font-size: 24px"><?= __('Specyfikacja', 'zadanie_hmmh') ?></h2>
     <p><?= get_field("brand").", ".get_field('model').", ".get_field('year_of_production') ?></p>
