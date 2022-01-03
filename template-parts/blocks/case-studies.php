@@ -19,8 +19,8 @@ $categories = get_terms([
     <div class="row">
       <?php foreach($case_studies as $case_study):
         $category = wp_get_post_categories($case_study, ['fields' => 'id=>name']);
-        $is_external = +get_field('is_external_url');
-        $url = $is_external ? get_field('is_external_url') : get_permalink($case_study);
+        $is_external = +get_field('is_external_url', $case_study);
+        $url = $is_external ? get_field('external_url', $case_study) : get_permalink($case_study);
         $url_txt = $is_external ? 'View case study website' : 'See case study details';
         ?>
         <div class="case-study col-md-6" data-category="<?= array_keys($category)[0] ?>" data-sort="value">
