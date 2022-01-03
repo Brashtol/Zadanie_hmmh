@@ -1,6 +1,6 @@
 <?php
 
-function registerTypes(){
+function register_types(){
 	$labels = array(
 		'name' => 'Samochód',
 		'all_items' => 'Samochody',
@@ -21,7 +21,7 @@ function registerTypes(){
 		'public' => true,
 		'show_ui' => true,
 		'show_in_nav_menus' => false,
-		'capability_type' => 'post',
+		'capability_type' => 'car',
 		'hierarchical' => false,
 		'supports' => array('title', 'editor'),
     'map_meta_cap' => true,
@@ -30,23 +30,42 @@ function registerTypes(){
 	);
 
 	register_post_type('car', $args);
-}
-add_action('init', 'registerTypes');
 
-add_role('mechanic', 'Mechanik', array(
-  'read_car',
-  'edit_car',
-  'edit_cars',
-  'edit_others_cars',
-  'edit_private_cars',
-  'edit_published_cars',
-  'publish__cars',
-  'delete_car',
-  'delete_cars',
-  'delete_private_cars',
-  'delete_published_cars',
-  'delete_others_cars',
-));
+}
+add_action('init', 'register_types');
+
+function set_mechanic_role() {
+  remove_role('mechanic');
+  $result = add_role('mechanic', 'Mechanik', array(
+    'view_admin_dashboard' => false,
+    'read' => true,
+    'read_post' => false,
+    'read_posts' => false,
+    'edit_post' => false,
+    'read_car' => true,
+    'edit_car' => true,
+    'delete_car' => true,
+
+    'edit_cars' => true,
+    'edit_others_cars' => true,
+    'publish_cars' => true,
+    'read_private_cars' => true,
+
+    'publish_car' => true,
+    'delete_cars' => true,
+    'delete_private_cars' => true,
+    'delete_published_cars' => true,
+    'delete_others_cars' => true,
+    'edit_private_cars' => true,
+    'edit_published_cars' => true,
+  ));
+
+  $user = wp_get_current_user();
+  if(in_array('mechanic', (array)$user->roles)) {
+    remove_menu_page('index.php');
+  }
+}
+add_action('admin_init', 'set_mechanic_role');
 
 if(function_exists('acf_add_local_field_group')):
 
@@ -143,7 +162,7 @@ if(function_exists('acf_add_local_field_group')):
   			array(
   				'param' => 'post_type',
   				'operator' => '==',
-  				'value' => 'post',
+  				'value' => 'car',
   			),
   		),
   	),

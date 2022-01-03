@@ -1,9 +1,12 @@
 <?php
 
 include("inc/enqueue_scripts.php");
-include("inc/register_types.php");
+// include("inc/register_types.php");
 include("inc/backend_task.php");
-include("inc/acf_frontend_task.php");
+$user = wp_get_current_user();
+if(!in_array('mechanic', (array)$user->roles)) {
+  include("inc/acf_frontend_task.php");
+}
 
 //usuwanie śmieci
 remove_action('wp_head', 'rsd_link');
